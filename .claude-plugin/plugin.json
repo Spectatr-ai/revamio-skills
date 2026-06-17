@@ -1,0 +1,21 @@
+{
+  "name": "revamio",
+  "displayName": "Revamio GTM Skills",
+  "version": "0.1.0",
+  "description": "GTM execution skills for Revamio — turn your real company data (GEO/AEO citations, competitors, keywords, signals, action plan, DNA) into work, in your brand voice. Bundles the Revamio MCP server.",
+  "author": { "name": "Spectatr", "url": "https://github.com/Spectatr-ai" },
+  "homepage": "https://github.com/Spectatr-ai/revamio-skills",
+  "repository": "https://github.com/Spectatr-ai/revamio-skills",
+  "license": "MIT",
+  "keywords": ["gtm", "seo", "geo", "aeo", "marketing", "revamio", "mcp"],
+  "mcpServers": "./.mcp.json",
+  "userConfig": {
+    "revamio_api_key": {
+      "type": "string",
+      "title": "Revamio API key",
+      "description": "Your Revamio API key (mk_live_…). Create one in the Revamio dashboard → Settings → API & Developer.",
+      "sensitive": true,
+      "required": true
+    }
+  }
+}
