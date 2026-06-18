@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "revamio": {
+      "command": "npx",
+      "args": ["-y", "@spectatr/revamio"],
+      "env": {
+        "REVAMIO_API_KEY": "${user_config.revamio_api_key}"
+      }
+    }
+  }
+}
