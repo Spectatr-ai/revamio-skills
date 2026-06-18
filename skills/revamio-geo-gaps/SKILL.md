@@ -22,7 +22,9 @@ reads that live data and turns it into a prioritized fix queue. Do not re-audit
 from scratch; start from Revamio's report.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not). Check
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file. Check
    its `geo` section freshness. If `geo` is never-scanned (or no context file),
    call `revamio_describe_company` to confirm GEO data exists; if it does not,
    tell the user "No GEO report yet — run a GEO scan from your Revamio dashboard,

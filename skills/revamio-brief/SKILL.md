@@ -22,7 +22,9 @@ Synthesize Revamio's intelligence into a short, ranked briefing that ends in a
 concrete next action — never a data dump.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists; if not, run **revamio-context** first.
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file.
 2. Read the cached context. If any section is stale (or for a cold start), call
    `revamio_get_action_plan` (`detail: "standard"`) and `revamio_get_geo_report`
    (`detail: "standard"`). The action-plan rows expose these fields directly —

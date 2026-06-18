@@ -25,7 +25,9 @@ grounded in Revamio's real keyword, action-plan, and GEO data.
 > coverage via WebFetch (the MCP does not return competitor article bodies).
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not).
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file.
 2. Pick the target keyword/topic. Source it (first available wins):
    a. a keyword/topic the user names; else
    b. `revamio_get_keywords` with `source: "gap"` (competitor gap keywords). The

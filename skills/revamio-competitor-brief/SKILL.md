@@ -23,7 +23,9 @@ what each rival just did. Start from Revamio's data; never invent a competitor,
 metric, or move.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not) — you need
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file. You need
    positioning + differentiation to frame "where we win".
 2. Call `revamio_get_competitors` for the data behind the card — request the
    sections you need (`profiles` default, plus `compare`, `gaps`, optionally

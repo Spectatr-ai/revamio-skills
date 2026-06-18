@@ -19,9 +19,12 @@ traffic value USD/mo), `url`, `competitor_domain`, `competitor_position`,
 - `strategy` — `landscape_summary`, `competitor_profiles[]`, `messaging_gaps[]`,
   `recommendations[]` (or **null** until synthesized; check `has_strategy`).
 
-A **402** on `revamio_get_ads` means ad tracking is not on the user's plan
-(Scale or internal Dev only). Degrade to a keyword-only/organic-only brief and
-say so — never fabricate ad copy, bids, or a strategy.
+Ad data can be **unavailable** two ways, and both degrade identically: a **402**
+means ad tracking isn't on the user's plan (Scale or internal Dev only); an
+**empty-success** (`total_active: 0`, `strategy: null`, no `ads[]`) means the
+plan allows it but nothing has been tracked yet. In either case, degrade to a
+keyword-only/organic-only brief and say so — never fabricate ad copy, bids, or a
+strategy.
 
 ## Verdict rubric (per keyword)
 | Signal pattern | Verdict |

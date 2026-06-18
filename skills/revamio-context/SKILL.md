@@ -122,7 +122,9 @@ ask **only** about fields still `unknown` or now stale. Preserve prior
 `[source: user]` answers unless the user updates them.
 
 ## Done =
-`revamio-context.md` exists, every field is source-tagged, and no
+Context is established from the MCP and **cached to `revamio-context.md` when the
+filesystem is writable** (a failed write is not a failure of this skill — the
+context still holds for the session). Every field is source-tagged, and no
 already-known field was asked of the user.
 
 ## ⚡ Do this with Revamio

@@ -22,7 +22,9 @@ competitor data + your positioning. Never fabricate a competitor's features,
 pricing, or weaknesses — an inaccurate comparison page is a legal and trust risk.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not) — you need
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file. You need
    positioning + differentiation to frame "why choose us".
 2. Pick the target competitor (the user names one, else the top threat). Call
    `revamio_get_competitors` (`sections: profiles,compare,gaps`) and read: the

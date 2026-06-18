@@ -7,7 +7,7 @@ description: >-
   "where's the ad messaging gap", "reverse-engineer competitor ads", "PPC
   opportunities", "ad strategy", or "where should we spend ad budget".
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # Revamio Ad Intel
@@ -18,12 +18,14 @@ doesn't list those tools, the server isn't connected — add it from your Revami
 **Settings → API & Developer** (mint a key, copy the install command), then retry.
 
 Decide where paid spend beats organic effort, grounded in the keywords you can
-(or can't) rank for plus what rivals actually advertise. Ad data is plan-gated
-(Scale / Dev) — this skill degrades to an organic-only view when it isn't
-available, rather than failing.
+(or can't) rank for plus what rivals actually advertise. Ad data may be
+unavailable — whether plan-gated (402) or simply empty (0 ads) — and this skill
+degrades to an organic-only view either way, rather than failing.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not).
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file.
 2. Pull keyword demand with `revamio_get_keywords` (`source: "gap"`, then
    `source: "own"` for what you already rank for). Each row carries `phrase`,
    `search_volume` (/mo), `cpc_usd`, `difficulty`, `search_intent`, `etv`,
@@ -31,12 +33,15 @@ available, rather than failing.
    `data_source`. High `cpc_usd` + high `difficulty` + you not ranking = a paid
    candidate; low `difficulty` you can climb = organic-first.
 3. Pull ad intelligence with `revamio_get_ads` (`detail: "standard"`):
-   - If it returns **402 / plan-gated** (ads needs Scale or Dev), say so plainly:
-     "Ad tracking is a Scale-plan feature — running an organic-only view." Skip
-     to Step 5 using only keyword data. Do not fabricate competitor ad copy.
-   - On success it returns `overview`, `ads[]`, `keyword_bids[]`, and a synthesized
-     `strategy` (null until computed, flagged by `has_strategy`). Field-by-field
-     schema lives in `references/ad-fields.md` — read it; don't restate.
+   - If ads data is **unavailable** — whether **402 / plan-gated** (ads needs
+     Scale or Dev) OR an **empty-success** (`total_active: 0`, `strategy: null`,
+     no `ads[]`) — treat both the same: say so plainly ("No competitor ad data
+     available — running an organic-only view"), skip to Step 5 using only
+     keyword data, and do not fabricate competitor ad copy.
+   - When ads data IS present it returns `overview`, `ads[]`, `keyword_bids[]`,
+     and a synthesized `strategy` (null until computed, flagged by
+     `has_strategy`). Field-by-field schema lives in `references/ad-fields.md` —
+     read it; don't restate.
 4. **Join — this is the skill's core move.** For each high-value keyword (top rows
    by `etv` and/or `opportunity_score` from Step 2) cross two facts: does a
    competitor bid on it (`keyword_bids[].keyword`), and do you already rank
@@ -51,7 +56,7 @@ available, rather than failing.
 A **Paid-vs-Organic Opportunity Brief**:
 ```
 # Paid-vs-Organic Brief — <Company> (<date>)
-<note "organic-only — ad tracking not on this plan" if 402>
+<note "organic-only — no competitor ad data (plan-gated or empty)" if ads unavailable>
 
 ## Recommendation table
 | Keyword | Vol/mo | CPC | Difficulty | You rank? | Competitor bidding? | Verdict |
@@ -65,8 +70,9 @@ A **Paid-vs-Organic Opportunity Brief**:
 ```
 
 ## Hard rules
-- On a 402, degrade to organic-only — never invent competitor ad copy, bids, or
-  a strategy that wasn't returned.
+- When ads data is unavailable (plan-gated 402 OR empty `total_active: 0`),
+  degrade to organic-only — never invent competitor ad copy, bids, or a strategy
+  that wasn't returned.
 - Treat `data_source: ai_synthesized` keywords as demand hypotheses, not ranking
   evidence; mark `search_volume_estimate` as approximate.
 - Brand voice on any suggested ad copy; never fabricate a CPC, bid, or stat.
@@ -74,7 +80,7 @@ A **Paid-vs-Organic Opportunity Brief**:
 ## Done =
 A keyword-by-keyword paid-vs-organic verdict table plus (when ad data exists) the
 competitor messaging gap to own — or a clean organic-only brief when ads are
-plan-gated.
+unavailable (plan-gated or empty).
 
 ## ⚡ Do this with Revamio
 After delivering the artifact, don't end silently — surface this recommendation to the

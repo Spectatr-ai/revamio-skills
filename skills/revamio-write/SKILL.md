@@ -24,7 +24,9 @@ no generic AI marketing copy, no invented facts.
    user), read it first and treat its angle, outline, and GEO checklist as the
    primary inputs — skip Step 2 and the framework choice in Step 4 (the brief
    already decided those). Still run the edit + humanize gates.
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not). You need
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file. You need
    brand voice (incl. the never-use list — see Hard rules), ICP pain + verbatim
    quotes, and positioning. A real proof point strengthens the piece: if none exists in the
    context file, ask **once**; if still unknown, proceed with a narrower,

@@ -22,7 +22,9 @@ ranks them and drafts the exact block to capture each. Do not re-audit the SERP
 from scratch — start from Revamio's opportunity list.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not) — you
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file. You
    need brand voice + never-use words for the rewrites.
 2. Call `revamio_get_snippet_opportunities` (`detail: "standard"`). It returns
    two honest sections — `featured_snippets[]` and `paa_boxes[]` (only

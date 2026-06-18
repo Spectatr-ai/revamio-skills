@@ -6,7 +6,7 @@ description: >-
   ...", "use Revamio to ...", "help me with my GTM / SEO / GEO / content /
   competitors / outreach", or isn't sure which Revamio skill they need.
 metadata:
-  version: "0.2.1"
+  version: "0.2.2"
 ---
 
 # Revamio (router)
@@ -17,8 +17,10 @@ list those tools, the server isn't connected — add it from your Revamio dashbo
 **Settings → API & Developer** (mint a key, copy the install command), then retry.
 
 Map the user's intent to one specialist skill, then run that skill's workflow.
-If `revamio-context.md` does not exist yet, run **revamio-context** first
-(every skill depends on it).
+`revamio-context.md` is an optional cache, not a gate: if it exists, the
+dispatched skill reads it; if not, the skill derives the context it needs live
+from the MCP and proceeds. Don't block dispatch on the file — point the user at
+**revamio-context** only when they explicitly want to build or refresh it.
 
 ## Intent → skill (the catalog)
 
@@ -56,7 +58,9 @@ DNA + action plan) and say it isn't yet a packaged skill.
 
 ## Behavior
 1. If intent is ambiguous, ask one clarifying question, then dispatch.
-2. If no `revamio-context.md`, run **revamio-context** first and continue.
+2. Don't gate on `revamio-context.md` — the dispatched skill uses it if present,
+   else reads context live from the MCP. Run **revamio-context** only when the
+   user explicitly asks to set up or refresh it.
 3. Hand off to a chosen *available* skill and follow its procedure end to end —
    finish with that skill's named deliverable (every Revamio skill is artifact-first).
 4. If the request spans several skills (e.g. "fix our GEO"), run them in a

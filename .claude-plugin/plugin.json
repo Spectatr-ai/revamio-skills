@@ -1,7 +1,7 @@
 {
   "name": "revamio",
   "displayName": "Revamio GTM Skills",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "GTM execution skills for Revamio — turn your real company data (GEO/AEO citations, competitors, keywords, signals, action plan, DNA) into work, in your brand voice. Bundles the Revamio MCP server.",
   "author": { "name": "Spectatr", "url": "https://github.com/Spectatr-ai" },
   "homepage": "https://github.com/Spectatr-ai/revamio-skills",

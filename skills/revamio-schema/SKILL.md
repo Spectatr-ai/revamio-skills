@@ -21,10 +21,15 @@ Most schema skills start by crawling and parsing the live site. Revamio already
 audited schema status — start there and jump straight to generation.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not). You need
-   company name, URL, ICP, and any sameAs profiles for accurate identity schema.
-2. Call `revamio_get_geo_report` with `detail: "full"` and read `schema_status`
-   — a list of `{schema_type, present, page_url, recommendation}`. **Treat the
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file. You
+   need company name, URL, ICP, and any sameAs profiles for accurate identity schema.
+2. Call `revamio_get_geo_report` (`detail: "standard"`, the default) and read
+   `schema_status` — a list of `{schema_type, present, page_url, recommendation}`.
+   (The full `schema_status` array is present at standard detail, so `detail:
+   "full"` is unnecessary here and just overflows the budget with its ~105KB
+   payload.) **Treat the
    `schema_type` strings as authoritative** and match them case-insensitively —
    do NOT assume a fixed name set or spelling (the audit's spelling/taxonomy can
    differ from canonical schema.org; see the template notes in

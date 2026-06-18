@@ -23,7 +23,9 @@ page, then apply the passage rubric. (There is **no** GEO "content sub-score" â€
 target the uncited queries and the rewrite_article actions instead.)
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not).
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed â€” never block waiting on the file.
 2. Identify the target. Prefer, in order:
    a. a specific page/query the user names; else
    b. a `revamio_get_geo_report` (`include_actions: true`) `priority_actions`

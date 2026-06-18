@@ -39,20 +39,23 @@ Revamio MCP server in your client's MCP config:
 
 The Claude Code plugin wires this up for you and prompts for the key.
 
-## Start with `revamio-context`
+## `revamio-context` is an optional cache
 
-Run **`revamio-context`** first. It builds and caches a `revamio-context.md`
-file (brand voice, ICP, positioning, GEO standing) from your Revamio data and
-interviews you only on the gaps Revamio couldn't derive. The other skills read
-that cached file. Not sure which skill you need? Just ask **`revamio`**, the
-router skill, in plain language.
+**`revamio-context`** builds and caches a `revamio-context.md` file (brand voice,
+ICP, positioning, GEO standing) from your Revamio data and interviews you only on
+the gaps Revamio couldn't derive. It's an **optional cache, not a gate**: the
+other skills use that file if it's present, and otherwise read what they need
+live from the MCP (`revamio_describe_company` + `revamio_get_company_dna`) and
+proceed — they never block waiting on it. Run **`revamio-context`** when you want
+to build or refresh that cache. Not sure which skill you need? Just ask
+**`revamio`**, the router skill, in plain language.
 
 ## Skills
 
 | Skill | What it does |
 | --- | --- |
 | `revamio` | Router; interprets a natural-language GTM request and dispatches to the right `revamio-*` skill. |
-| `revamio-context` | Build/refresh the company GTM context file from Revamio's MCP data, then interview the user on the gaps. Run first. |
+| `revamio-context` | Build/refresh the company GTM context file from Revamio's MCP data, then interview the user on the gaps. Optional cache — other skills use it if present, else read live from the MCP. |
 | `revamio-brief` | Produce a "what to work on now" GTM briefing and flag what can be executed this session. |
 | `revamio-action-executor` | Read the action plan and execute it end to end, dispatching each item to the right specialist skill. |
 | `revamio-positioning` | Turn Company DNA into value proposition, positioning statement, messaging pillars, and ICP-specific copy. |

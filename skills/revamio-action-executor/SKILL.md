@@ -23,7 +23,9 @@ reads the plan, dispatches each item to the specialist skill that owns its
 skill that does not exist.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** first if not).
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file.
 2. Call `revamio_get_action_plan` (`detail: "standard"`). Each row gives you
    `title`, `tier`, `source` + `source_label`, `impact_label`, `effort`,
    `severity`, `why`, `how_to_fix_it`, and `action_type` (the dispatch key).

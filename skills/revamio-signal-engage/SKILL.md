@@ -8,7 +8,7 @@ description: >-
   replies to signals", "who's asking about us", "intent feed", "warm leads to
   reply to", or "which posts should I jump on".
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # Revamio Signal Engage
@@ -24,18 +24,25 @@ and drafts a reply for each — **draft only, never posted**, locked to brand
 voice, and gated by the community's contribution ratio.
 
 ## Procedure
-1. Ensure `revamio-context.md` exists (run **revamio-context** if not) — you need
+1. `revamio-context.md` is an optional cache: if it exists, read it; if not,
+   derive what you need live from the MCP (`revamio_describe_company` +
+   `revamio_get_company_dna`) and proceed — never block waiting on the file. You need
    brand voice (incl. never-use words), positioning, and ICP language.
-2. Call `revamio_get_signals` (`detail: "standard"`; optionally filter
-   `min_buyer_intent: 70`, `platform`, `signal_type`, `recency_days`; use
-   `detail: "full"` for `response_angle` + `poster_context` +
-   `top_comment_preview`). The full field list lives in
-   `references/engage-rubric.md` (its single home). Note: `priority_score`
-   already incorporates buyer intent, so `min_buyer_intent` is an OPTIONAL
-   pre-filter — the ranking is always by `priority_score`, never by raw
-   `buyer_intent`.
-   If empty/404, say "No signals queued yet — run a signal scan from your Revamio
-   dashboard" and stop. Never invent a post or a quote.
+2. Call `revamio_get_signals` (`detail: "standard"`) **UNFILTERED first** — do
+   NOT pass `min_buyer_intent` on this initial call. A high `min_buyer_intent`
+   (e.g. 60–70) on a weak feed returns 0 rows and makes a non-empty feed look
+   empty, hiding real qualitative insight (the top-ranked item being a competitor
+   founder, or all signals being low-intent-but-present). Pull everything, then
+   rank/triage locally by `buyer_intent` + ICP fit (`priority_score` already
+   incorporates buyer intent — rank by it, surfacing the highest-intent first).
+   Use `detail: "full"` for `response_angle` + `poster_context` +
+   `top_comment_preview`. The full field list lives in
+   `references/engage-rubric.md` (its single home). `platform`, `signal_type`,
+   and `recency_days` remain available as scoping filters if the user asks for a
+   specific slice — but never gate the read on `min_buyer_intent`.
+   If the feed is **genuinely empty (0 signals)** or 404, say "No signals queued
+   yet — run a signal scan from your Revamio dashboard" and stop. Never invent a
+   post or a quote.
 3. Call `revamio_get_communities` (`detail: "standard"`) for the promo gate
    (ledger field list in `references/engage-rubric.md`). Map each signal's
    `community_name` to its ledger row.

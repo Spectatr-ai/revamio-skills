@@ -19,17 +19,20 @@ Developer**, then register the server (`npx -y @spectatr/revamio`, with
 `REVAMIO_API_KEY` set). In Claude Code, installing the Revamio plugin wires the
 server automatically and prompts for the key.
 
-## Run `revamio-context` first
+## `revamio-context` is an optional cache
 
 `revamio-context` builds and caches a `revamio-context.md` file (brand voice,
-ICP, positioning, GEO standing, and gaps it interviews the user to fill). The
-other skills read that cached file, so run it at the start of a session before
-the other `revamio-*` skills.
+ICP, positioning, GEO standing, and gaps it interviews the user to fill). This
+file is an **optional cache, not a gate**: the other skills use it if it's
+present, and otherwise read what they need live from the MCP
+(`revamio_describe_company` + `revamio_get_company_dna`) and proceed — they never
+block waiting on it. Run `revamio-context` when you want to build or refresh that
+cache.
 
 ## The 15 skills
 
 - **revamio** — router; interprets a natural-language GTM request and dispatches to the right `revamio-*` skill.
-- **revamio-context** — build/refresh the company GTM context file from MCP data, then interview the user on gaps. Run first.
+- **revamio-context** — build/refresh the company GTM context file from MCP data, then interview the user on gaps. Optional cache — other skills use it if present, else read live from the MCP.
 - **revamio-brief** — "what to work on now" GTM briefing; flags what can be executed this session.
 - **revamio-action-executor** — read the action plan and execute it end to end, dispatching each item to the right specialist skill.
 - **revamio-positioning** — turn Company DNA into value prop, positioning statement, messaging pillars, ICP copy.

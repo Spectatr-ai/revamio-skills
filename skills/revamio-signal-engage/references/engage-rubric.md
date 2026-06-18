@@ -19,7 +19,11 @@ Each `ledger[]` row: `community_name`, `contributions`, `product_mentions`,
 `contributions_needed_for_mention`, `can_mention_product`.
 
 ## Ranking
-1. `priority_score` descending.
+Fetch the feed UNFILTERED (no `min_buyer_intent` on the read), then rank locally
+— a high `min_buyer_intent` filter can turn a non-empty feed into a false
+"empty" and hide qualitative insight. Ranking order:
+1. `priority_score` descending (it already incorporates `buyer_intent`; the
+   highest-intent signals surface first).
 2. Within a tie, `is_overdue` true first, then lowest
    `respond_by_remaining_minutes` (closest to expiry).
 3. Prefer higher `icp_match` when intent + SLA are equal.
