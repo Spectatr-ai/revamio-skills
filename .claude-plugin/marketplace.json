@@ -1,0 +1,14 @@
+{
+  "name": "revamio-skills",
+  "owner": { "name": "Spectatr", "url": "https://github.com/Spectatr-ai" },
+  "metadata": {
+    "description": "Revamio's GTM execution skills — turn your real company data (GEO/AEO, competitors, keywords, signals, action plan) into work, in your brand voice. Bundles the Revamio MCP server."
+  },
+  "plugins": [
+    {
+      "name": "revamio",
+      "source": ".",
+      "description": "Revamio GTM skills + the Revamio MCP server. Prompts for your API key on install."
+    }
+  ]
+}

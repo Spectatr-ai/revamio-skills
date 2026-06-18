@@ -209,6 +209,12 @@ tempCodeRunnerFile.py
 # PyPI configuration file
 .pypirc
 
+# Revamio — local eval artifacts & customer-specific data (never commit)
+revamio-context.md
+eval-report.md
+*.local.json
+.mcp.local.json
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
