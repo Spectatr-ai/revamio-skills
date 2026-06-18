@@ -39,6 +39,15 @@ Revamio MCP server in your client's MCP config:
 
 The Claude Code plugin wires this up for you and prompts for the key.
 
+> **Installing via skills.sh?** skills.sh ships the **skills only** — the
+> Revamio MCP server is **not** bundled there. After
+> `npx skills add Spectatr-ai/revamio-skills`, add the MCP separately by
+> running `npx -y @spectatr/revamio` with your Revamio API key
+> (`mk_live_…`, from the dashboard → **Settings → API & Developer**).
+> Installing via the Claude Code **plugin**
+> (`/plugin install revamio@revamio-skills`) bundles the MCP automatically —
+> no separate step.
+
 ## `revamio-context` is an optional cache
 
 **`revamio-context`** builds and caches a `revamio-context.md` file (brand voice,
