@@ -7,7 +7,7 @@ description: >-
   the action plan", "run the next actions", "knock out my to-dos", "auto-execute
   Revamio", "just do the plan", or "run everything you can from the plan".
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Action Executor
@@ -34,25 +34,15 @@ skill that does not exist.
 4. Confirm scope with the user: how many items to execute this session
    (default: the top 3 executable), and whether the repo is connected (some
    fixes apply directly, others are delivered as drafts/snippets).
-5. Dispatch each item by `action_type` using the map in
-   `references/dispatch-map.md`. **`action_type` is null on most Tier-1/2 rows**
-   (it is set only on some items, e.g. `rewrite_article`/`generate_schema`); the
-   payload's `action_type_note` says as much. Rule for a **null `action_type`**:
-   default to **manual** — UNLESS `source`/`source_label` + `how_to_fix_it` give
-   an unambiguous intent that maps to a built skill (e.g. a GEO FAQ-schema fix →
-   **revamio-schema**), in which case route on that intent and label the row a
-   "degraded match (routed by source, not action_type)". Never guess a target
-   for an ambiguous null row.
-   - `rewrite_article` → **revamio-aeo-content**
-   - `generate_schema` → **revamio-schema**
-   - `write_article` / `create_page` → **revamio-content-brief** then
-     **revamio-write**
-   - `positioning` / `messaging` → **revamio-positioning**
-   - `vs` / `alternatives` / `comparison_page` → **revamio-competitor-page**
-   - GEO citation gap (source GEO, no clear code action) → **revamio-geo-gaps**
-   - `submit_listing` / `outreach` / `plan` (off-page, outbound, strategy) →
-     **manual** — write the concrete step the user should take; never dispatch a
-     skill that isn't built.
+5. Dispatch each item by `action_type` using the authoritative map in
+   `references/dispatch-map.md` — that table is the single source of truth; do
+   not re-derive routing from memory. The one judgment that stays inline is the
+   **null `action_type`** branch (true of most Tier-1/2 rows; the payload's
+   `action_type_note` says so): default to **manual** UNLESS `source`/`source_label`
+   + `how_to_fix_it` give an unambiguous intent that maps to a built skill (e.g.
+   a GEO FAQ-schema fix → **revamio-schema**), in which case route on that intent
+   and label the row a "degraded match (routed by source, not action_type)".
+   Never guess a target for an ambiguous null row.
    Run one item at a time; pass that item's fields (title, why, target) into the
    child skill as its brief. Honor each child skill's own quality gates.
 6. After each item, append a line to the run-log (status, deliverable location,

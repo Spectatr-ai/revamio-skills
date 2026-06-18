@@ -7,7 +7,7 @@ description: >-
   "where's the ad messaging gap", "reverse-engineer competitor ads", "PPC
   opportunities", "ad strategy", or "where should we spend ad budget".
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Ad Intel
@@ -34,24 +34,16 @@ available, rather than failing.
    - If it returns **402 / plan-gated** (ads needs Scale or Dev), say so plainly:
      "Ad tracking is a Scale-plan feature — running an organic-only view." Skip
      to Step 5 using only keyword data. Do not fabricate competitor ad copy.
-   - On success it returns `overview`, `ads[]` (each: `advertiser_domain`,
-     `advertiser_name`, `is_own_ad`, `platform`, `ad_format`, `headline`,
-     `body_text`, `call_to_action`, `landing_url`, `messaging_theme`,
-     `sentiment_tone`, `ai_summary`), `keyword_bids[]` (`keyword`,
-     `advertiser_domain`, `is_own_domain`, `avg_position`, `times_seen`), and
-     `strategy` (the synthesized conclusion: `landscape_summary`,
-     `competitor_profiles`, `messaging_gaps`, `recommendations` — or null if not
-     computed yet, flagged by `has_strategy`). See `references/ad-fields.md`.
-4. Join: for each high-value keyword — defined as the top rows by `etv` (and/or
-   `opportunity_score`) from Step 2, i.e. the keywords already ranked highest there —
-   check whether a competitor bids on it (`keyword_bids[].keyword`) and whether you
-   already rank organically (`position`). That tells you "they pay because they can't
-   rank" vs "open lane".
-5. Classify each opportunity (rubric in `references/ad-fields.md`):
-   **Paid-first** (high cpc, high difficulty, competitors bidding, you absent),
-   **Organic-first** (winnable difficulty, low cpc, you near page 1),
-   **Both** (high intent + high volume worth defending on both),
-   **Skip** (low intent / low volume).
+   - On success it returns `overview`, `ads[]`, `keyword_bids[]`, and a synthesized
+     `strategy` (null until computed, flagged by `has_strategy`). Field-by-field
+     schema lives in `references/ad-fields.md` — read it; don't restate.
+4. **Join — this is the skill's core move.** For each high-value keyword (top rows
+   by `etv` and/or `opportunity_score` from Step 2) cross two facts: does a
+   competitor bid on it (`keyword_bids[].keyword`), and do you already rank
+   organically (`position`)? Competitor-bids-but-you-don't-rank = "they pay because
+   they can't rank" (buy the lane); you-rank-and-no-bids = open organic lane.
+5. Classify each opportunity into **Paid-first / Organic-first / Both / Skip** using
+   the signal-pattern rubric in `references/ad-fields.md`.
 6. If `strategy.messaging_gaps` exists, surface the angle rivals' ads don't own
    that this company can — straight from the data, brand-voiced.
 

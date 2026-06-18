@@ -7,7 +7,7 @@ description: >-
   comparison page", "alternatives page", "X vs us", "comparison landing page", or
   acts on a competitor content gap.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Competitor Page
@@ -34,18 +34,19 @@ pricing, or weaknesses — an inaccurate comparison page is a legal and trust ri
    `brand_voice`, and `icp_segments` — the "why choose us" backbone.
 4. (Optional) `revamio_get_keywords` (`source: "gap"`) for the comparison search
    terms ("<rival> alternative", "<rival> vs <you>") to target in headings.
-5. Draft the page using answer-first AEO structure (question-shaped H2s, self-
-   contained blocks):
-   - H1 + intro stating who it's for and the honest verdict.
+5. Draft the page answer-first — question-shaped H2s, self-contained blocks (the
+   passage rubric in `../revamio-aeo-content/references/passage-rubric.md` is the
+   source of truth for what makes a block citable; apply it, don't re-derive it):
+   - H1 + intro stating who it's for and the honest verdict (TL;DR up top).
    - A side-by-side comparison table — **only attributes you can ground**; mark any
      unknown rival value as "—", never guess it.
    - "Where <you> wins" / "Where <rival> wins" — fair, from the real `compare` data.
    - "Best for…" guidance per ICP; an FAQ for the comparison queries.
    - Brand voice throughout; one honest CTA.
-5b. The FAQ section warrants FAQPage JSON-LD: hand the comparison-query FAQ to
+6. The FAQ section warrants FAQPage JSON-LD: hand the comparison-query FAQ to
    **revamio-schema** to generate the structured data, so the page is eligible for
    rich results / AI citation on those queries.
-6. Apply or hand off (codebase-aware): if the repo is connected, create the page in
+7. Apply or hand off (codebase-aware): if the repo is connected, create the page in
    the detected stack and show a diff; else output the full page + exact placement.
 
 ## Output (the deliverable)

@@ -7,7 +7,7 @@ description: >-
   "where am I losing AI citations to competitors", or "what GEO fixes matter
   most".
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # Revamio GEO Gaps
@@ -27,34 +27,23 @@ from scratch; start from Revamio's report.
    call `revamio_describe_company` to confirm GEO data exists; if it does not,
    tell the user "No GEO report yet — run a GEO scan from your Revamio dashboard,
    then come back" and stop.
-2. Call BOTH (if either returns 404 / no report, stop with the message above):
-   - `revamio_get_ai_citations` (default `include: "gaps"`) for the per-engine
-     competitor grid. Returns `summary`, `engines[]` (per engine:
-     `engine_display_name`, `citation_rate_pct`, `queries_cited`,
-     `queries_checked`, `status`), `total_gaps`, and `citations.items[]` (each:
-     `query_text`, `engine`, `brand_mentioned`, `is_gap`,
-     `competitors_mentioned[]`, `query_intent`, `query_intent_label`,
-     `recommendation_strength`, `recommendation_strength_rank` 0-4,
-     `brand_mention_position`). Pass `include: "all"` for the full grid, or
-     `engine` (e.g. `"chatgpt"`) to focus one engine. Default `gaps` returns
-     only uncited rows where a competitor is named.
-   - `revamio_get_geo_report` (`detail: "standard"`, `include_actions: true`)
-     for overall score + grade, `score_components`, and `priority_actions`.
-     Note: `score_components` can be **null** (pre-v2 rows); when present it has
-     keys `recommendation_quality`, `description_accuracy`,
-     `answer_box_ownership`, `technical_discoverability` (each with `label` +
-     `score`). There are NO separate schema/content/social_proof sub-scores.
+2. Call BOTH `revamio_get_ai_citations` (default `include: "gaps"`, the
+   per-engine competitor grid) and `revamio_get_geo_report` (`detail: "standard"`,
+   `include_actions: true`, the overall score + `priority_actions`). See
+   `references/citation-fields.md` for every field, the `include`/`engine`
+   options, the `recommendation_strength_rank` semantics, and the
+   `score_components` null-handling. If either returns 404 / no report, stop with
+   the message above.
 3. **Gap view (real data).** Group `citations.items[]` by `engine` (cross-ref
    the per-engine `engines[]` header for rates), then bucket each gap by
    `query_intent` into Buy/Solve/Learn:
    - **Buy** ← `buying_signal`, `comparison`
    - **Solve** ← `problem_query`
    - **Learn** ← `category_query`, `brand_query`
-   Within a tier, order by `recommendation_strength_rank` (weakest first =
-   0 not-mentioned … 4 recommended-first; lower rank is more actionable).
-   Surface `competitors_mentioned` directly — that is the real "who is cited in
-   your place." Only fall back to a live WebFetch of the engine if
-   `competitors_mentioned` is empty for a query the user specifically cares about.
+   Within a tier, order by `recommendation_strength_rank` (weakest first — see
+   the rank semantics in `references/citation-fields.md`). Surface
+   `competitors_mentioned` directly — that is the real "who is cited in your
+   place."
 4. Map each gap to the fix that closes it and the skill that does it:
    - missing/invalid schema (low `technical_discoverability`) → **revamio-schema**
    - thin/unstructured passage (low `answer_box_ownership`) → **revamio-aeo-content**

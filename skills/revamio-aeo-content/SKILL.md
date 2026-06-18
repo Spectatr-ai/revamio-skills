@@ -7,7 +7,7 @@ description: >-
   for AEO/GEO", "improve passage structure", "fix a page so ChatGPT cites it",
   "rewrite this for AI search", or acts on a content gap from revamio-geo-gaps.
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # Revamio AEO Content
@@ -45,13 +45,12 @@ target the uncited queries and the rewrite_article actions instead.)
    common for auth-gated or heavily client-rendered pages), ask the user to
    paste the page text or point to the source file. Do not rewrite content you
    couldn't actually read.
-4. Apply the passage rubric in `references/passage-rubric.md`:
-   - answer-first, self-contained 134–167-word blocks
-   - question-shaped H2/H3 matching how people ask AI engines
-   - one verifiable statistic, quote, or citation per key block (big citation lift)
-   - front-load the answer (first ~30% of the page gets disproportionate citations)
-   - no pronoun-heavy openings; each block must stand alone out of context
-   - keep brand voice from the context file throughout
+4. Apply the passage rubric in `references/passage-rubric.md` (structure,
+   citation boosters, anti-patterns, per-engine nuance — all length and
+   placement numbers live there). The one non-negotiable that governs every
+   rewrite: each block must stand alone out of context — answer-first, no
+   pronoun-dependent openings — so an AI engine can lift it as the answer to its
+   target query. Keep the brand voice from the context file throughout.
 5. Produce the rewrite. If the repo is connected, edit the source file and show
    a diff; otherwise output the revised passages with clear before/after.
 

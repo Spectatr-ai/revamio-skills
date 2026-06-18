@@ -7,7 +7,7 @@ description: >-
   Organization/FAQ/Article schema", or acts on a schema gap from
   revamio-geo-gaps.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Schema
@@ -26,14 +26,14 @@ audited schema status — start there and jump straight to generation.
 2. Call `revamio_get_geo_report` with `detail: "full"` and read `schema_status`
    — a list of `{schema_type, present, page_url, recommendation}`. **Treat the
    `schema_type` strings as authoritative** and match them case-insensitively —
-   do NOT assume a fixed name set or spelling. The live audit may use British
-   spelling (`"Organisation"`) and a product-centric taxonomy (`"Product"`),
-   which differ from the canonical schema.org type names below. Generate for
-   every entry where `present` is false (or the type is flagged invalid).
+   do NOT assume a fixed name set or spelling (the audit's spelling/taxonomy can
+   differ from canonical schema.org; see the template notes in
+   `references/jsonld-templates.md`). Generate for every entry where `present`
+   is false (or the type is flagged invalid).
 3. Map each audited type to a template (see `references/jsonld-templates.md`),
    matching on the audit's `schema_type` (case-insensitive) — common ones:
-   - **Organization** (audit may say `Organisation`) (+ `sameAs`) — foundational
-     for the knowledge-graph sub-score.
+   - **Organization** (+ `sameAs`) — foundational for the knowledge-graph
+     sub-score.
    - **Product** — when the audit reports a missing `Product` type.
    - **WebSite** (+ SearchAction) — sitelinks searchbox.
    - **FAQPage** — for top citation-gap queries (use real Q&A, brand voice).
@@ -50,8 +50,10 @@ audited schema status — start there and jump straight to generation.
      JSON-LD component; WordPress/Webflow → output the block + exact placement.
    - If no repo, output complete `<script type="application/ld+json">` blocks
      with the precise location to paste each.
-6. Validate: the JSON-LD must be valid and pass schema.org's validator; remind
-   the user to test live.
+6. Validate what you can: the JSON-LD must be syntactically valid and
+   well-formed. You can't run schema.org's validator yourself, so remind the
+   user to paste each block into the Schema.org validator / Google Rich Results
+   Test and test live before relying on it.
 
 ## Output (the deliverable)
 Paste-ready JSON-LD block(s) (or applied file edits + a diff summary), each

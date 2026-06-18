@@ -6,7 +6,7 @@ description: >-
   post / landing page / LinkedIn post / tweet in our voice", "draft content
   about X", or "turn this keyword into an article".
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Write
@@ -25,8 +25,8 @@ no generic AI marketing copy, no invented facts.
    primary inputs — skip Step 2 and the framework choice in Step 4 (the brief
    already decided those). Still run the edit + humanize gates.
 1. Ensure `revamio-context.md` exists (run **revamio-context** if not). You need
-   brand voice (incl. never-use words), ICP pain + verbatim quotes, and
-   positioning. A real proof point strengthens the piece: if none exists in the
+   brand voice (incl. the never-use list — see Hard rules), ICP pain + verbatim
+   quotes, and positioning. A real proof point strengthens the piece: if none exists in the
    context file, ask **once**; if still unknown, proceed with a narrower,
    honest angle (use the category/method as the anchor) and flag in the output
    "add a real proof point before publishing." Never block or re-ask repeatedly.
@@ -41,11 +41,13 @@ no generic AI marketing copy, no invented facts.
 4. Draft using a fitting structure (`references/frameworks.md` — PAS, AIDA,
    BAB, etc.) in the brand voice. Use ICP verbatim language, not vendor-speak.
 5. **Edit — Seven Sweeps** (`references/seven-sweeps.md`): clarity, voice/tone,
-   "so what", prove-it, specificity, emotion, zero-risk. Score 0–10; target 8+.
-6. **Humanize** (`references/humanizer.md`): strip the AI tells listed in
-   `references/humanizer.md`; check the never-use list; aim for a human-ness
-   score of 8+/10.
-7. Deliver. If the repo is connected and it's web content, write the file to
+   "so what", prove-it, specificity, emotion, zero-risk. Score each 0–10.
+6. **Humanize** (`references/humanizer.md`): strip the AI tells listed there;
+   honor the never-use list (Hard rules); score human-ness 0–10.
+7. **Gate before Deliver.** Do not advance to Step 8 until *both* the Seven
+   Sweeps score and the Humanizer score are ≥8. Below either bound, iterate the
+   failing sweep(s) and re-score; do not ship at 7-or-below.
+8. Deliver. If the repo is connected and it's web content, write the file to
    the right place (`/blog`, `/content`, MDX) with frontmatter; otherwise output
    the finished piece + a suggested filename.
 
@@ -55,8 +57,11 @@ one-line note on the target query and the proof point used.
 
 ## Hard rules
 - Never invent a statistic, customer, quote, or result.
-- Respect the never-use vocabulary from the context file.
-- Don't ship below the 8+/10 edit and humanizer gates — iterate first.
+- **Never-use list** (single source of truth): the brand's banned vocabulary
+  from `revamio-context.md`. Every draft, sweep, and humanize pass honors it;
+  steps above just cite this rule.
+- The Step 7 gate is hard: never ship below ≥8 on *both* the Seven Sweeps and
+  Humanizer scores — iterate first.
 
 ## Done =
 A publish-ready piece in the brand voice, grounded in a real anchor + proof,

@@ -7,7 +7,7 @@ description: >-
   "outline a post that can rank and get cited", "pick a keyword to write about",
   or "what content should we make next".
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # Revamio Content Brief
@@ -28,14 +28,10 @@ grounded in Revamio's real keyword, action-plan, and GEO data.
 1. Ensure `revamio-context.md` exists (run **revamio-context** if not).
 2. Pick the target keyword/topic. Source it (first available wins):
    a. a keyword/topic the user names; else
-   b. `revamio_get_keywords` with `source: "gap"` (competitor gap keywords —
-      each row carries `phrase`, `search_volume` (/mo), `cpc_usd`, `difficulty`,
-      `search_intent`, `etv`, `competitor_domain`, `competitor_position`,
-      `opportunity_score`, `cluster_name`, and `data_source`). Pick a high-`etv`
-      / high-`opportunity_score` row with reachable `difficulty`. Fall back to
-      `source: "cluster"` for AI-synthesized demand phrases (flagged
-      `data_source: ai_synthesized`, `no_rank_data: true` — treat as a demand
-      hypothesis, not ranking evidence); else
+   b. `revamio_get_keywords` with `source: "gap"` (competitor gap keywords). The
+      row schema + pick rule live in `references/keyword-fields.md`. Fall back to
+      `source: "cluster"` for AI-synthesized demand phrases (a demand hypothesis,
+      not ranking evidence — see the `data_source` row in that file); else
    c. `revamio_get_action_plan` (`detail: "standard"`) Tier-2 items — each row's
       `source`/`source_label` tells you the surface and `action_type` the verb;
       take items with `action_type` in {`write_article`, `create_page`} or

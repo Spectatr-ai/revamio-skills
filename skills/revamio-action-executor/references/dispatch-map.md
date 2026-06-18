@@ -1,5 +1,9 @@
 # action_type → skill dispatch map
 
+Single source of truth for routing a Revamio action-plan item to the skill that
+executes it. `revamio`, `revamio-brief`, and `revamio-action-executor` all route
+by this table — do not re-list it elsewhere; point here.
+
 `action_type` is the machine verb on each `revamio_get_action_plan` row (and on
 each `revamio_get_geo_report` `priority_actions` row). It comes from a fixed
 allowlist; everything outside it is treated as manual.
@@ -17,10 +21,15 @@ allowlist; everything outside it is treated as manual.
 | `plan` | **manual** | Strategy/decision item — surface it for the user to decide. |
 | (GEO citation gap, no clear code action) | **revamio-geo-gaps** | When `source_label` is GEO and the verb is ambiguous, route to the gap-queue skill. |
 
-## Fallback rule
-If `action_type` is missing or unrecognized, fall back to `source_label`:
-- SEO / GEO surface → **revamio-content-brief** or **revamio-aeo-content**
-- Competitors / Communities / Ads / anything without a built skill → **manual**
+## Null / unrecognized `action_type` (most Tier-1/2 rows)
+`action_type` is set only on some rows (e.g. `rewrite_article`,
+`generate_schema`); on most it is null — the payload's `action_type_note` says
+so. When it is null or unrecognized, fall back to `source_label` + `how_to_fix_it`:
+- SEO / GEO surface with an unambiguous intent → **revamio-content-brief** or
+  **revamio-aeo-content** (or **revamio-schema** for a GEO FAQ/structured-data
+  fix); label the row a "degraded match (routed by source, not action_type)".
+- Competitors / Communities / Ads / anything ambiguous or without a built skill
+  → **manual**. Never guess a target for an ambiguous null row.
 
 ## Never
 - Dispatch to `revamio-battlecard`, `revamio-outbound`, or `revamio-community` —

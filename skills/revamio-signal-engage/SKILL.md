@@ -8,7 +8,7 @@ description: >-
   replies to signals", "who's asking about us", "intent feed", "warm leads to
   reply to", or "which posts should I jump on".
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Signal Engage
@@ -27,35 +27,24 @@ voice, and gated by the community's contribution ratio.
 1. Ensure `revamio-context.md` exists (run **revamio-context** if not) — you need
    brand voice (incl. never-use words), positioning, and ICP language.
 2. Call `revamio_get_signals` (`detail: "standard"`; optionally filter
-   `min_buyer_intent: 70`, `platform`, `signal_type`, `recency_days`). Each
-   signal carries `id`, `platform`, `signal_type`, `community_name`,
-   `source_url`, `raw_text`, `author_handle`, `buyer_intent` (0–100) +
-   `buyer_intent_label`, `icp_match` (0–100), `competitor_mentioned`,
-   `matched_keywords`, `priority_score`, `confidence`, `detected_at`,
-   `respond_by_remaining_minutes` (negative = overdue), `is_overdue`, and
-   `engagement_velocity`. Use `detail: "full"` to also get `response_angle`,
-   `poster_context`, and `top_comment_preview`. See `references/engage-rubric.md`.
-   Note: `priority_score` already incorporates buyer intent, so `min_buyer_intent`
-   is an OPTIONAL pre-filter — the ranking is always by `priority_score`, never by
-   raw `buyer_intent`.
+   `min_buyer_intent: 70`, `platform`, `signal_type`, `recency_days`; use
+   `detail: "full"` for `response_angle` + `poster_context` +
+   `top_comment_preview`). The full field list lives in
+   `references/engage-rubric.md` (its single home). Note: `priority_score`
+   already incorporates buyer intent, so `min_buyer_intent` is an OPTIONAL
+   pre-filter — the ranking is always by `priority_score`, never by raw
+   `buyer_intent`.
    If empty/404, say "No signals queued yet — run a signal scan from your Revamio
    dashboard" and stop. Never invent a post or a quote.
-3. Call `revamio_get_communities` (`detail: "standard"`) for the promo gate. Each
-   `ledger[]` row has `community_name`, `actual_ratio`, `ratio_status`,
-   `ratio_status_remediation` (the actionable text), `can_mention_product`, and
-   `contributions_needed_for_mention`. Map each signal's `community_name` to its
-   ledger row.
-4. Rank signals by `priority_score` (descending), surfacing `is_overdue` /
-   low `respond_by_remaining_minutes` first within ties — those expire.
-5. For each top signal, draft a reply (rubric in `references/engage-rubric.md`):
-   - Answer the poster's actual question/pain from `raw_text` first; lead with
-     help, not a pitch.
-   - **Mention the product ONLY if `can_mention_product` is true.** If false,
-     write a pure-value reply and show `ratio_status_remediation` so the user
-     knows why (and how many contributions unlock a mention).
-   - Brand voice from the context file; obey the never-use list.
-   - Use only facts from `revamio-context.md` — never fabricate a stat, result,
-     customer, or feature.
+3. Call `revamio_get_communities` (`detail: "standard"`) for the promo gate
+   (ledger field list in `references/engage-rubric.md`). Map each signal's
+   `community_name` to its ledger row.
+4. Rank signals using the ranking rules in `references/engage-rubric.md`
+   (`priority_score` descending, overdue / closest-to-expiry first within ties).
+5. For each top signal, draft a reply per the reply rubric in
+   `references/engage-rubric.md` — value-first, promo gate hard
+   (`can_mention_product`), brand voice + never-use list, no fabrication. Draft
+   only.
 
 ## Output (the deliverable)
 A **Signal Engage Queue**:

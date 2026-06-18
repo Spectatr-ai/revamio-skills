@@ -7,7 +7,7 @@ description: >-
   did competitors just do", "competitive landscape", "who are our threats",
   "competitor analysis", or "give me a one-pager on the competition".
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Competitor Brief
@@ -25,33 +25,22 @@ metric, or move.
 ## Procedure
 1. Ensure `revamio-context.md` exists (run **revamio-context** if not) — you need
    positioning + differentiation to frame "where we win".
-2. Call `revamio_get_competitors` with the sections you need (comma-separated):
-   - `profiles` (default) — `name`, `domain`, `threat_level` (+
-     `threat_level_label`), `organic_traffic`, `organic_keywords`,
-     `intersecting_keywords`, `keyword_overlap_pct`, `authority_score`,
-     `avg_position`, and AI-traffic (`chatgpt_traffic`/`gemini_traffic`/
-     `claude_traffic` — **null = NOT MEASURED, not zero**; honor the `notes`).
-   - `compare` — the you-vs-rivals table (`is_you`, `competitive_score`,
-     `visits`, `organic_traffic`, `seo_score`, `geo_score`, AI traffic).
-   - `gaps` — content-gap clusters (`cluster_name`, `primary_keyword`,
-     `gap_score`, `search_volume`, `difficulty`, `coverage`,
-     `competitor_strength`, `recommended_action`, `content_angle`).
-   - `content` — rivals' published articles (**requires `content_intelligence`;
-     402 if not entitled — skip gracefully, don't fabricate**).
-   See `references/battlecard-fields.md` for the full field list.
+2. Call `revamio_get_competitors` for the data behind the card — request the
+   sections you need (`profiles` default, plus `compare`, `gaps`, optionally
+   `content`). Field-by-field schema, the null-AI-traffic rule, and the `content`
+   402 gate all live in `references/battlecard-fields.md` — read it; don't restate.
 3. Call `revamio_get_competitor_moves` (`detail: "standard"`) for the last-90-day
-   feed: `competitor_name`, `event_type` (+ `event_type_label`; one of
-   NEW_PARTNERSHIP / GEO_EXPANSION / NEW_PRODUCT / KEY_HIRE), `title`,
-   `description`, `event_date`, `partner_name`, `geography`,
-   `strategic_implication`, `recommended_action` (the last two are **null until
-   the events enrichment pass runs** — pass them through as null, do not infer).
-   Honor the tool's `note` about pending moves.
-4. Rank competitors by `threat_level` then `competitive_score`. For the top 2–3,
-   assemble: where they're stronger (traffic/keywords/AI), where you win (from
-   positioning + any `compare` field you lead), the content gaps to attack, and
-   their recent moves with the (real or pending) recommended response.
-5. If a section is empty / 402 / not yet scanned, say so in the brief and lean on
-   the sections that did return — never pad with invented data.
+   move feed (schema + the "strategy fields null until enrichment runs" rule:
+   same reference). Honor the tool's `note` about pending moves.
+4. **Rank by `threat_level`, then `competitive_score`** — this ordering is the
+   judgment the card exists to make; everything below serves the top 2–3. For each
+   top rival assemble, Fact → Impact → Act: where they're stronger
+   (traffic/keywords/AI), where *you* win (positioning + any `compare` field you
+   lead), the content gaps to attack, and their recent moves with the (real or
+   pending) recommended response.
+5. If a section is empty / 402 / not yet scanned, **name it as an intelligence gap**
+   in the brief and lean on the sections that did return — a named unknown is an
+   honest artifact; invented data is not.
 
 ## Output (the deliverable)
 A one-page **Competitor Battlecard**:
@@ -77,8 +66,7 @@ A one-page **Competitor Battlecard**:
 
 ## Hard rules
 - Never fabricate a competitor, metric, article, or move — only what the tools
-  returned.
-- Treat null AI-traffic as NOT MEASURED (per the tool's note), distinct from 0.
+  returned. (Null/gated/pending handling: `references/battlecard-fields.md`.)
 - Pass null `strategic_implication`/`recommended_action` through as pending; do
   not invent strategy for an un-enriched move.
 

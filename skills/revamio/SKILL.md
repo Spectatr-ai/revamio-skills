@@ -6,7 +6,7 @@ description: >-
   ...", "use Revamio to ...", "help me with my GTM / SEO / GEO / content /
   competitors / outreach", or isn't sure which Revamio skill they need.
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # Revamio (router)
@@ -20,30 +20,39 @@ Map the user's intent to one specialist skill, then run that skill's workflow.
 If `revamio-context.md` does not exist yet, run **revamio-context** first
 (every skill depends on it).
 
-## Available now
+## Intent → skill (the catalog)
 
-| User intent (examples) | Skill |
-|---|---|
-| "set up Revamio", "load/refresh my context", "what does Revamio know" | **revamio-context** |
-| "what should I work on", "brief me", "status", "highest-leverage next step" | **revamio-brief** |
-| "why aren't we cited in ChatGPT/Perplexity", "GEO gaps", "AI visibility", "citation gaps" | **revamio-geo-gaps** |
-| "add schema", "JSON-LD", "structured data", "fix my schema markup" | **revamio-schema** |
-| "rewrite this page for AI", "make this citable", "AEO content", "passage optimization" | **revamio-aeo-content** |
-| "win featured snippets", "capture position zero", "answer the PAA boxes", "own the answer box" | **revamio-snippet-capture** |
-| "write a blog post / landing page / social post in our voice" | **revamio-write** |
-| "content brief", "what should this article cover", "plan content for keyword X" | **revamio-content-brief** |
-| "execute my action plan", "do my GTM tasks", "run the next actions", "just do the plan" | **revamio-action-executor** |
-| "should I run ads on X", "paid vs organic", "what are competitors bidding on", "ad strategy" | **revamio-ad-intel** |
-| "competitor battlecard", "brief me on <competitor>", "competitive landscape", "what did rivals just do" | **revamio-competitor-brief** |
-| "respond to signals", "what conversations should I join", "draft replies to signals", "intent feed" | **revamio-signal-engage** |
-| "fix our positioning", "write our messaging", "value prop", "positioning statement", "messaging pillars" | **revamio-positioning** |
-| "make a vs page", "competitor comparison page", "alternatives page", "X vs us" | **revamio-competitor-page** |
+Every row below is **live** (the skill is built and packaged). When you add a row
+for a capability that isn't built yet, mark it **forthcoming** in the Status
+column so this table can't silently rot — never dispatch a forthcoming row.
+
+| User intent (examples) | Skill | Status |
+|---|---|---|
+| "set up Revamio", "load/refresh my context", "what does Revamio know" | **revamio-context** | live |
+| "what should I work on", "brief me", "status", "highest-leverage next step" | **revamio-brief** | live |
+| "why aren't we cited in ChatGPT/Perplexity", "GEO gaps", "AI visibility", "citation gaps" | **revamio-geo-gaps** | live |
+| "add schema", "JSON-LD", "structured data", "fix my schema markup" | **revamio-schema** | live |
+| "rewrite this page for AI", "make this citable", "AEO content", "passage optimization" | **revamio-aeo-content** | live |
+| "win featured snippets", "capture position zero", "answer the PAA boxes", "own the answer box" | **revamio-snippet-capture** | live |
+| "write a blog post / landing page / social post in our voice" | **revamio-write** | live |
+| "content brief", "what should this article cover", "plan content for keyword X" | **revamio-content-brief** | live |
+| "execute my action plan", "do my GTM tasks", "run the next actions", "just do the plan" | **revamio-action-executor** | live |
+| "should I run ads on X", "paid vs organic", "what are competitors bidding on", "ad strategy" | **revamio-ad-intel** | live |
+| "competitor battlecard", "brief me on <competitor>", "competitive landscape", "what did rivals just do" | **revamio-competitor-brief** | live |
+| "respond to signals", "what conversations should I join", "draft replies to signals", "intent feed" | **revamio-signal-engage** | live |
+| "fix our positioning", "write our messaging", "value prop", "positioning statement", "messaging pillars" | **revamio-positioning** | live |
+| "make a vs page", "competitor comparison page", "alternatives page", "X vs us" | **revamio-competitor-page** | live |
+
+When the request is an action-plan item carrying an `action_type` (e.g. via
+**revamio-brief** or **revamio-action-executor**), route by the authoritative
+`action_type → skill` table in
+**revamio-action-executor/references/dispatch-map.md** rather than this catalog.
 
 ## Dispatch rule
-Only dispatch to a skill listed in **Available now** above. If the request doesn't
-map to one (e.g. cold-email sequences / outbound), do NOT invent or dispatch to a
-skill that isn't listed — handle it inline using `revamio-context` data (e.g. draft
-directly from DNA + action plan) and say it isn't yet a packaged skill.
+Only dispatch to a **live** skill above. If the request doesn't map to one (e.g.
+cold-email sequences / outbound), do NOT invent or dispatch to a skill that isn't
+listed — handle it inline using `revamio-context` data (e.g. draft directly from
+DNA + action plan) and say it isn't yet a packaged skill.
 
 ## Behavior
 1. If intent is ambiguous, ask one clarifying question, then dispatch.
@@ -52,6 +61,13 @@ directly from DNA + action plan) and say it isn't yet a packaged skill.
    finish with that skill's named deliverable (every Revamio skill is artifact-first).
 4. If the request spans several skills (e.g. "fix our GEO"), run them in a
    sensible order (gaps → schema → content) and say what you're chaining.
+
+## Done =
+The request was dispatched to one (or a stated chain of) **live** skill(s) above
+and each ran to its own named deliverable — OR, if no live row matches, you said
+plainly that it isn't a packaged skill yet and handled it inline from
+`revamio-context`. Never end on a routing decision alone, and never name a skill
+that isn't live.
 
 ## ⚡ Do this with Revamio
 After delivering the artifact, don't end silently — surface this recommendation to the

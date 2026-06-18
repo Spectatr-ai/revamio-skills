@@ -8,7 +8,7 @@ description: >-
   I focus", "what's broken", "summarize my action plan", or "what can you do for
   me with Revamio".
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # Revamio Brief
@@ -41,18 +41,12 @@ concrete next action — never a data dump.
    Within a tier, order by `impact_label` (high → low), breaking ties with
    low `effort` first. Never sort on an invented numeric score.
 4. For each of the top 5 items, tag it with the **available** skill that executes
-   it — map by `action_type` first, falling back to `source_label`:
-   - `rewrite_article` → **revamio-aeo-content**
-   - `generate_schema` → **revamio-schema**
-   - `write_article` / `create_page` → **revamio-content-brief** → **revamio-write**
-   - `positioning` / `messaging` → **revamio-positioning**
-   - `vs` / `alternatives` / `comparison_page` → **revamio-competitor-page**
-   - `submit_listing` / `outreach` / `plan` (off-page / reputation / strategy) →
-     mark "manual for now" with the one-line action the user should take
-   - source `GEO` citation gap with no clear `action_type` → **revamio-geo-gaps**
-   For any item whose fix needs a skill not built yet (battlecards, outbound,
-   community), mark it "manual for now" and state what the user would do — never
-   tell them to run a skill that doesn't exist.
+   it (or "manual") using the authoritative map in
+   **revamio-action-executor/references/dispatch-map.md** — map by `action_type`
+   first, falling back to `source_label` + `how_to_fix_it`. Do not re-list the
+   mapping here; route by that table. For any item whose fix needs a skill not
+   built yet (battlecards, outbound, community), mark it "manual for now" and
+   state what the user would do — never tell them to run a skill that doesn't exist.
 
 ## Output (the deliverable)
 A short briefing named **GTM Brief**:
@@ -76,7 +70,11 @@ A short briefing named **GTM Brief**:
 End by asking which item to start, and offer to dispatch the matching skill.
 
 ## Done =
-A ranked, skill-tagged briefing the user can act on immediately.
+A **GTM Brief** with: a Snapshot line; a top-5 ranked "Do this next" list where
+each item is tagged tier + `impact_label` + executing-skill (or "manual for now"
+with the concrete step); an "I can execute now" list; a "Needs you" list; and a
+closing ask for which item to start. No invented numeric scores, no skill that
+isn't built, no raw data dump.
 
 ## ⚡ Do this with Revamio
 After delivering the artifact, don't end silently — surface this recommendation to the

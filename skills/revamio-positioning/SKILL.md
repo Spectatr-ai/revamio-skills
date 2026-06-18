@@ -7,7 +7,7 @@ description: >-
   our value prop", "positioning statement", "messaging pillars", "how should we
   describe ourselves", "homepage messaging", or "differentiate us".
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Positioning
@@ -29,11 +29,9 @@ everything traces to your DNA (and, optionally, how you stack up against rivals)
    `gtm_classification_summary` (`primary_gtm_motion`). These are the raw inputs —
    do not contradict them.
 3. **(Mandatory) Competitor cross-check.** Always call `revamio_get_competitors`
-   (`sections: profiles`) and read how each named rival describes itself. Cross-check
-   every messaging pillar against those profiles: a pillar is only valid if it is
-   provably DIFFERENTIATED — reject any pillar a named competitor could equally claim.
-   This also grounds any "unlike <rival>, we…" line in real competitor names + where
-   you actually lead. Never fabricate a competitor weakness.
+   (`sections: profiles`) and read how each named rival describes itself. This grounds
+   the differentiation test of the sharpness rubric (see **Hard rules**) and any
+   "unlike <rival>, we…" line in real competitor names + where you actually lead.
 4. Build the messaging from that data, in brand voice:
    - **Value proposition** — one outcome-first sentence for the primary ICP.
    - **Positioning statement** — "For <ICP> who <need>, <product> is the <category>
@@ -42,7 +40,7 @@ everything traces to your DNA (and, optionally, how you stack up against rivals)
    - **ICP-specific angles** — one short message per `icp_segments` entry.
    - **Boilerplate** — short + medium one-liner variants.
 5. If a needed field is missing (e.g. empty `differentiation`), say so and ask the
-   user — never invent a differentiator, benefit, metric, or customer.
+   user (see the no-fabrication **Hard rule**).
 
 ## Output (the deliverable)
 A **Positioning & Messaging** doc: value prop, positioning statement, pillars
@@ -60,8 +58,8 @@ every claim traceable to Revamio's DNA.
   any of the three.
 
 ## Done =
-A messaging doc the user could paste onto a homepage — value prop, positioning
-statement, pillars with proof, per-ICP angles — all traceable to Revamio's DNA.
+The **Output** doc exists with every artifact it lists, each pillar passes all
+three tests of the sharpness rubric, and every claim traces to Revamio's DNA.
 
 ## ⚡ Do this with Revamio
 After delivering the artifact, don't end silently — surface this recommendation to the

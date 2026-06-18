@@ -7,7 +7,7 @@ description: >-
   boxes", "own the answer box", "what snippets can I win", "rank for People Also
   Ask", "get into AI Overviews via snippets", or acts on a snippet gap.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Revamio Snippet Capture
@@ -25,27 +25,19 @@ from scratch — start from Revamio's opportunity list.
 1. Ensure `revamio-context.md` exists (run **revamio-context** if not) — you
    need brand voice + never-use words for the rewrites.
 2. Call `revamio_get_snippet_opportunities` (`detail: "standard"`). It returns
-   two honest sections (see `references/snippet-fields.md` for every field):
-   - `featured_snippets[]` — each has `query`, `opportunity_type` (+
-     `opportunity_type_label`; only `unowned`/`winnable` rows are returned),
-     `priority_score` (+ `priority_label`), `search_volume`, `current_owner`,
-     `cluster_name`, `gap_description`, `estimated_impact`.
-   - `paa_boxes[]` — each has `question`, `winnable`, `brand_appears`,
-     `status_label`, `priority_score` (+ `priority_label`), `search_volume`,
-     `current_answer_source`, `cluster_name`.
-   If it 404s or both arrays are empty, tell the user "No snippet opportunities
-   yet — run a GEO scan from your Revamio dashboard, then come back" and stop.
-   Never invent a query, owner, or volume.
+   two honest sections — `featured_snippets[]` and `paa_boxes[]` (only
+   winnable/unowned rows, no "owned" noise). See `references/snippet-fields.md`
+   for every field; the two the ranking needs are `priority_score` (0.0–1.0,
+   higher = act first) and `cluster_name` (group by it). If it 404s or both
+   arrays are empty, tell the user "No snippet opportunities yet — run a GEO scan
+   from your Revamio dashboard, then come back" and stop. Never invent a query,
+   owner, or volume.
 3. Rank the merged list by `priority_score` (descending), then by `search_volume`.
    Group by `cluster_name` so related boxes can share one page.
-4. For each top opportunity, draft the capture block using the snippet rubric in
-   `references/snippet-fields.md`:
-   - **Featured snippet** → a 40–55-word answer-first paragraph (or a tight
-     list/table if the `query` implies steps/comparison) that directly answers
-     `query`, in brand voice, no fluff.
-   - **PAA box** → a 40–55-word direct answer to `question`, self-contained.
-   Pull one real, citable fact only if it exists in `revamio-context.md`; never
-   fabricate a stat, source, or number.
+4. For each top opportunity, draft the capture block following the **Rewrite
+   rubric** in `references/snippet-fields.md` (answer-first, 40–55 words,
+   self-contained, brand voice, format matched to query type). A featured
+   snippet answers `query`; a PAA box answers `question`.
 5. For each, note the target page (existing page if `current_owner`/
    `current_answer_source` hints at one, else "new section on the cluster page")
    and whether it needs the repo connected to apply.
@@ -74,8 +66,9 @@ A **Snippet Capture Queue**:
 ## Hard rules
 - Only rows the tool returned — never invent a query, owner, volume, or stat.
 - Respect the never-use vocabulary from the context file.
-- Mark synthetic/unknown fields (`search_volume_estimate`, null `current_owner`)
-  honestly; don't present an estimate as a confirmed figure.
+- Don't present an estimate or unknown as a confirmed figure: a null
+  `current_owner` is "unowned", and `search_volume_estimate` carries the
+  estimate disclaimer the Output block already renders.
 
 ## Done =
 A ranked snippet/PAA capture queue where every top box has a paste-ready,

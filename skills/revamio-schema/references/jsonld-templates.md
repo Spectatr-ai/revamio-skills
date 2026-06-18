@@ -3,6 +3,12 @@
 Fill with real data from `revamio-context.md`. Never invent ratings, awards,
 review counts, founders, or `sameAs` profiles that weren't confirmed.
 
+**Audit spelling/taxonomy caveat (single source).** Revamio's `schema_status`
+audit may name types with British spelling (`"Organisation"` → emit
+`Organization`) or a product-centric taxonomy (`"Product"`). Match the audit's
+`schema_type` case-insensitively and map to the canonical type below; if a named
+type has no template here, emit the closest valid schema.org type and note it.
+
 ## Organization (+ sameAs)
 ```json
 {
@@ -17,10 +23,9 @@ review counts, founders, or `sameAs` profiles that weren't confirmed.
 ```
 
 ## Product
-The live GEO audit often uses a product-centric taxonomy and may report a
-missing `Product` type. Emit `offers`/`aggregateRating` **only** with real,
-confirmed pricing and review data — never invent a price, currency, rating, or
-review count. Drop any sub-field you can't ground.
+Emit `offers`/`aggregateRating` **only** with real, confirmed pricing and review
+data — never invent a price, currency, rating, or review count. Drop any
+sub-field you can't ground.
 ```json
 {
   "@context": "https://schema.org",
