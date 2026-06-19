@@ -10,12 +10,12 @@ The skills never fabricate data — they only use what the MCP returns.
 ## Prerequisite
 
 A Revamio account and an API key. Create one in the Revamio dashboard →
-**[Settings → API & Developer](https://dashboard.revamio.com/settings/api-keys)** (`mk_live_…`). The Claude Code plugin route
+**[Settings → MCP & Skills](https://dashboard.revamio.com/settings/api-keys)** (`mk_live_…`). The Claude Code plugin route
 prompts for this key automatically on install; the other routes need it set as
 `REVAMIO_API_KEY` in your MCP client config.
 
 > **Get your Revamio API key:** create one in the Revamio dashboard →
-> **[Settings → API & Developer](https://dashboard.revamio.com/settings/api-keys)**
+> **[Settings → MCP & Skills](https://dashboard.revamio.com/settings/api-keys)**
 > (`https://dashboard.revamio.com/settings/api-keys`). It looks like `mk_live_…`.
 > Paste it when the Claude Code plugin prompts you on install, or pass it as the
 > `REVAMIO_API_KEY` env var when adding the MCP manually (`npx -y @spectatr/revamio`).
@@ -49,7 +49,7 @@ The Claude Code plugin wires this up for you and prompts for the key.
 > Revamio MCP server is **not** bundled there. After
 > `npx skills add Spectatr-ai/revamio-skills`, add the MCP separately by
 > running `npx -y @spectatr/revamio` with your Revamio API key
-> (`mk_live_…`, from the dashboard → **[Settings → API & Developer](https://dashboard.revamio.com/settings/api-keys)**).
+> (`mk_live_…`, from the dashboard → **[Settings → MCP & Skills](https://dashboard.revamio.com/settings/api-keys)**).
 > Installing via the Claude Code **plugin**
 > (`/plugin install revamio@revamio-skills`) bundles the MCP automatically —
 > no separate step.
