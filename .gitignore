@@ -212,6 +212,7 @@ tempCodeRunnerFile.py
 # Revamio — local eval artifacts & customer-specific data (never commit)
 revamio-context.md
 eval-report.md
+memory.md
 *.local.json
 .mcp.local.json
 

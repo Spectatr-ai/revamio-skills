@@ -54,36 +54,36 @@ The Claude Code plugin wires this up for you and prompts for the key.
 > (`/plugin install revamio@revamio-skills`) bundles the MCP automatically —
 > no separate step.
 
-## `revamio-context` is an optional cache
+## `marketing-context` is an optional cache
 
-**`revamio-context`** builds and caches a `revamio-context.md` file (brand voice,
+**`marketing-context`** builds and caches a `revamio-context.md` file (brand voice,
 ICP, positioning, GEO standing) from your Revamio data and interviews you only on
 the gaps Revamio couldn't derive. It's an **optional cache, not a gate**: the
 other skills use that file if it's present, and otherwise read what they need
 live from the MCP (`revamio_describe_company` + `revamio_get_company_dna`) and
-proceed — they never block waiting on it. Run **`revamio-context`** when you want
+proceed — they never block waiting on it. Run **`marketing-context`** when you want
 to build or refresh that cache. Not sure which skill you need? Just ask
-**`revamio`**, the router skill, in plain language.
+**`marketing-router`**, the router skill, in plain language.
 
 ## Skills
 
 | Skill | What it does |
 | --- | --- |
-| `revamio` | Router; interprets a natural-language GTM request and dispatches to the right `revamio-*` skill. |
-| `revamio-context` | Build/refresh the company GTM context file from Revamio's MCP data, then interview the user on the gaps. Optional cache — other skills use it if present, else read live from the MCP. |
-| `revamio-brief` | Produce a "what to work on now" GTM briefing and flag what can be executed this session. |
-| `revamio-action-executor` | Read the action plan and execute it end to end, dispatching each item to the right specialist skill. |
-| `revamio-positioning` | Turn Company DNA into value proposition, positioning statement, messaging pillars, and ICP-specific copy. |
-| `revamio-write` | Generate brand-voice-locked content (blog posts, landing copy, social) from DNA, ICP, and keywords. |
-| `revamio-content-brief` | Turn a keyword/topic into a full SEO+GEO content brief grounded in real keyword data and competitor gaps. |
-| `revamio-geo-gaps` | Turn the GEO/AEO report into a ranked, engine-by-engine citation-gap action queue. |
-| `revamio-aeo-content` | Rewrite a page or passage so AI engines will cite it, targeting uncited AI queries. |
-| `revamio-schema` | Generate paste-ready schema.org JSON-LD that closes GEO schema-audit gaps; inject into the codebase when connected. |
-| `revamio-snippet-capture` | Turn winnable featured-snippet and People-Also-Ask opportunities into a ranked capture queue with paste-ready rewrites. |
-| `revamio-competitor-brief` | Build a one-page competitor battlecard from competitor profiles, comparison, gaps, and recent moves. |
-| `revamio-competitor-page` | Draft a "you vs <competitor>" / "<competitor> alternatives" comparison landing page, SEO/GEO-optimized and brand-voiced. |
-| `revamio-ad-intel` | Cross keyword data with competitor ad intelligence into a paid-vs-organic opportunity brief. |
-| `revamio-signal-engage` | Turn the buyer-intent signal feed into a ranked engage queue with a drafted, brand-voiced reply per high-intent signal. |
+| `marketing-router` | Entry point — interprets any natural-language GTM question and dispatches to the right skill. Start here if unsure. |
+| `marketing-context` | Build/refresh the company GTM context file from Revamio's MCP data. Optional cache — other skills use it if present, else read live from the MCP. |
+| `marketing-priorities` | "What should I work on this week?" — produces a ranked top-5 GTM briefing grounded in keyword opportunity, competitor moves, and AI citation gaps. |
+| `execute-marketing-plan` | Work through your marketing action plan step by step, dispatching each item to the right specialist skill. |
+| `brand-positioning-messaging` | Sharpen brand positioning, craft a value proposition, write a positioning statement, and define messaging pillars. |
+| `brand-voice-writer` | Write a blog post, landing page, email, or social post in your company's brand voice. Includes SEO and AEO optimization pass. |
+| `seo-content-optimizer` | Turn a keyword or topic into a writer-ready SEO + AEO content brief grounded in real keyword data and competitor gaps. |
+| `aeo-geo-citation-audit` | Site-wide audit of why your company isn't appearing in AI engine answers — ranked fix list per engine. |
+| `aeo-geo-optimizer` | Rewrite a specific page or passage so AI engines (ChatGPT, Perplexity, Google AI Overview) will cite it. |
+| `json-ld-schema` | Generate paste-ready JSON-LD structured data (Organization, Product, FAQ, Article, BreadcrumbList) and close GEO schema gaps. |
+| `snippet-paa-optimizer` | Win featured snippets and People Also Ask boxes — ranked capture queue with paste-ready 40–55 word answer blocks. |
+| `competitor-intelligence` | Build an internal one-page competitor battlecard from profiles, content gaps, and recent moves. |
+| `competitor-comparison-page` | Draft a "you vs [competitor]" or "best alternatives to [competitor]" SEO landing page. |
+| `keyword-ad-strategy` | Decide which keywords to pay for (PPC) vs. rank for organically — grounded in CPC, keyword difficulty, and competitor ad data. |
+| `buyer-intent-replies` | Find Reddit, Twitter, LinkedIn, and forum threads where prospects are asking questions your product answers — drafts a brand-voiced reply per signal. |
 
 Skills point you to the relevant dashboard tab where helpful; in-app UI
 walkthroughs are not yet included.
