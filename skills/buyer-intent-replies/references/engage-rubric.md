@@ -6,7 +6,7 @@ Each row (standard): `id`, `platform`, `signal_type`, `community_name`,
 `source_url`, `raw_text`, `author_handle`, `buyer_intent` (0–100; ≥70 high,
 40–69 medium, <40 low) + `buyer_intent_label`, `icp_match` (0–100),
 `competitor_mentioned`, `matched_keywords[]`, `keyword_match_count`,
-`priority_score` (0.0–1.0), `confidence`, `detected_at`,
+`priority_score` (0–100), `confidence`, `detected_at`,
 `respond_by_remaining_minutes` (minutes until SLA closes; negative = overdue),
 `is_overdue`, `engagement_velocity`.
 `detail: "full"` adds: `response_angle`, `poster_context`,
@@ -34,7 +34,7 @@ Fetch the feed UNFILTERED (no `min_buyer_intent` on the read), then rank locally
 - **Promo gate (hard)**: include a product mention ONLY when
   `can_mention_product` is true. If false, write a pure-value reply and surface
   `ratio_status_remediation` + `contributions_needed_for_mention` so the user
-  knows the gate and how to unlock it.
+  knows the gate and how to unlock it. If no ledger row matches the signal's `community_name` (empty ledger or untracked community), treat `can_mention_product` as `false` — mention blocked.
 - **Brand voice**: tone + vocabulary from `revamio-context.md`; obey the
   never-use list; sound human, not like an ad.
 - **No fabrication**: only facts in the context file; never invent a stat,

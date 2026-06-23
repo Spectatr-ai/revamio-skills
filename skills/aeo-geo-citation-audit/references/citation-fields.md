@@ -54,3 +54,5 @@ a `label` + `score`):
 There are **NO** separate schema / content / social_proof sub-scores — don't
 invent them. When `score_components` is null, render it as "unavailable" in the
 deliverable header.
+
+**Do not look for `ai_engine_results[]` or `citation_gaps[]` in the geo_report response** — those are internal backend names not exposed by the MCP. The per-engine citation data lives exclusively in `revamio_get_ai_citations`'s `engines[]` + `citations.items[]`.

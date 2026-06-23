@@ -39,13 +39,13 @@ metric, or move.
    top rival assemble, Fact → Impact → Act: where they're stronger
    (traffic/keywords/AI), where *you* win (positioning + any `compare` field you
    lead), the content gaps to attack, and their recent moves with the (real or
-   pending) recommended response.
+   pending) recommended response. If `compare` returned no rows, rank by `threat_level` alone and note `competitive_score` as unavailable.
 5. If a section is empty / 402 / not yet scanned, **name it as an intelligence gap**
    in the brief and lean on the sections that did return — a named unknown is an
    honest artifact; invented data is not.
 
 ## Output (the deliverable)
-A one-page **Competitor Battlecard** with: a threat-ranking table (competitor, threat level, competitive score, organic traffic, keyword overlap, AI traffic — noting that null AI traffic means not measured, not zero); a "Where we win / Where we lose" section; a content-gaps-to-attack table (cluster, primary keyword, gap score, volume, difficulty, angle); and a recent moves feed (last 90 days) with each move's event type, title, date, and recommended response or "pending analysis". Note any empty, gated, or pending sections. Format using your current IDE's best table and list rendering.
+A one-page **Competitor Battlecard** with: a threat-ranking table (competitor, threat level, competitive score (if compare section returned data), organic traffic, keyword overlap, AI traffic — noting that null AI traffic means not measured, not zero); a "Where we win / Where we lose" section; a content-gaps-to-attack table (cluster, primary keyword, gap score, volume, difficulty, angle — omit if gaps section returned no data, noting it as an intelligence gap per Step 5); and a recent moves feed (last 90 days) with each move's event type, title, date, and recommended response or "pending analysis". Note any empty, gated, or pending sections. Format using your current IDE's best table and list rendering.
 
 ## Hard rules
 - Never fabricate a competitor, metric, article, or move — only what the tools
