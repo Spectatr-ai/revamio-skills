@@ -19,4 +19,4 @@ target keyword (Step 2) and to judge reachability.
 
 **Pick rule:** prefer a high-`etv` / high-`opportunity_score` row with reachable
 `difficulty`. Always carry the row's `search_intent` and the AI-engine
-question(s) behind it into the brief.
+question(s) behind it into the brief. When all `etv` values are zero or null (no row has a positive `etv` — common on new/not-yet-ranking accounts), rank by `opportunity_score` descending, then `search_volume` descending — the `etv`-first signal does nothing until the site accumulates ranking data.
