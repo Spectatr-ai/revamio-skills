@@ -39,7 +39,7 @@ metric, or move.
    top rival assemble, Fact → Impact → Act: where they're stronger
    (traffic/keywords/AI), where *you* win (positioning + any `compare` field you
    lead), the content gaps to attack, and their recent moves with the (real or
-   pending) recommended response. If `compare` returned no rows, rank by `threat_level` alone and note `competitive_score` as unavailable.
+   pending) recommended response. If `compare` returned no rows, rank by `threat_level` alone and note `competitive_score` as unavailable — an empty `compare` array may be transient (Wave 2 enrichment still running); check `revamio_describe_company` freshness before declaring it permanently unavailable.
 5. If a section is empty / 402 / not yet scanned, **name it as an intelligence gap**
    in the brief and lean on the sections that did return — a named unknown is an
    honest artifact; invented data is not.

@@ -18,6 +18,8 @@ Each `ledger[]` row: `community_name`, `contributions`, `product_mentions`,
 `ratio_status_remediation` (always present — the actionable text),
 `contributions_needed_for_mention`, `can_mention_product`.
 
+**Ledger cap:** the API returns at most 25 ledger rows. If a signal's `community_name` is not found in the response, it may be row 26+ (capped, not untracked). In that ambiguous case, treat `can_mention_product` as `false` — mention blocked — but note to the user that the community may be healthy and the ledger cap prevented confirmation.
+
 ## Ranking
 Fetch the feed UNFILTERED (no `min_buyer_intent` on the read), then rank locally
 — a high `min_buyer_intent` filter can turn a non-empty feed into a false

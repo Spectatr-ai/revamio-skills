@@ -55,4 +55,4 @@ There are **NO** separate schema / content / social_proof sub-scores — don't
 invent them. When `score_components` is null, render it as "unavailable" in the
 deliverable header.
 
-**Do not look for `ai_engine_results[]` or `citation_gaps[]` in the geo_report response** — those are internal backend names not exposed by the MCP. The per-engine citation data lives exclusively in `revamio_get_ai_citations`'s `engines[]` + `citations.items[]`.
+**Field naming disambiguation:** `revamio_get_geo_report` (standard) exposes per-engine citation rates under `ai_engine_results[]` and a derived convenience list under `citation_gaps[]`. `revamio_get_ai_citations` exposes per-engine header rates under `engines[]` and per-query citation rows under `citations.items[]`. These are structurally similar but different field names — do not conflate them. Use `revamio_get_ai_citations` when you need per-query data with `competitors_mentioned`; use `citation_gaps[]` from `revamio_get_geo_report` for aggregate gap awareness only.
